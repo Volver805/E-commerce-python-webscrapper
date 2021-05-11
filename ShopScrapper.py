@@ -8,7 +8,7 @@ class ShopScrapper:
         self.item = item_name
 
     def scrape(self) -> list:
-        self.url.replace('{item}', self.item)
+        self.url = self.url.replace('{item}', self.item)
         request = requests.get(self.url, headers=self.HEADERS)
         soup = BeautifulSoup(request.content, 'lxml')
         return self.fetchProducts(soup)
