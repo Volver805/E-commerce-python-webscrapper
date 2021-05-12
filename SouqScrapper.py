@@ -17,14 +17,11 @@ class SouqScrapper(ShopScrapper):
         products = soup.find_all('div', class_='single-item')
         result = []
         for product in products:
-            titleDIV = product.find_all('h6', class_='title itemTitle')
-            price = product.find_all('span', class_='itemPrice')
-            image = product.find_all('img', class_='img-size-medium')[0]['src']
             result.append({
-                "name": titleDIV[0].text.replace('\n', '').strip(),
-                "link": titleDIV[0].findChildren('a', recursive=False)[0]['href'],
-                "price": price[0].text,
-                "image": image
+                "name": product.select('.itemTitle')[0].text.replace('\n', '').strip(),
+                "link": product.select('.itemLink ')[0]['href'],
+                "price": product.select('.itemPrice')[0].text,
+                "image": product.find_all('img', class_='img-size-medium')[0]['src']
             })
 
         return result
